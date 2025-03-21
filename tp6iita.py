@@ -35,6 +35,7 @@ Datos={
 print(f"El alumno 1 es {Datos["Alumnos"][0]}")
 print(f"El alumno 2 es {Datos["Alumnos"][1]}")
 print(f"El alumno 3 es {Datos["Alumnos"][2]}")
+dnis=[Datos["Alumnos"][0]["dni"],Datos["Alumnos"][1]["dni"],Datos["Alumnos"][2]["dni"]]
 #Pregunta si quiere agregar a un nuevo alumno
 pregunta=input("Quiere agregar un nuevo alumno?: ").lower()
 j=3
@@ -44,6 +45,10 @@ while pregunta=="si":
     nom=input("Ingrese el nombre del nuevo alumno: ")
     ap=input("Ingrese el apellido del nuevo alumno: ")
     DNI=int(input("Ingrese el DNI del nuevo alumno: "))
+    if DNI not in dnis:
+        dnis.append(DNI)
+    else:
+        DNI=int(input("El DNI ya existe ingrese otro: "))
     fecha_de_nac=input("Ingrese la fecha de nacimiento del nuevo alumno(dd/mm/aaaa): ")
     tutor=input("Ingrese el nombre y apellido del tutor del nuevo alumno: ")
     #Usa un for i para las notas q son 6
@@ -79,6 +84,13 @@ while pregunta=="si":
             nota=int(input("Ingrese las notas del alumno: "))
             auxnotas.append(nota)
             Datos["Alumnos"][auxpreg-1][auxpreg2]=auxnotas
+    elif auxpreg2=="dni": #Si el dato que quiere cambiar es un dni
+        DNI=int(input("Ingrese el DNI del nuevo alumno: "))
+        if DNI not in dnis:
+            dnis.append(DNI)
+        else:
+            DNI=int(input("El DNI ya existe ingrese otro: "))
+        Datos["Alumnos"][auxpreg-1][auxpreg2]=DNI
     else: #Si no son notas se cambia de forma normal
         Datos["Alumnos"][auxpreg-1][auxpreg2]=input("Ingresa el nuevo dato: ")
     print(Datos["Alumnos"][auxpreg-1])
@@ -89,8 +101,9 @@ pregunta=input("Desea eliminar a un alumno?: ").lower()
 while pregunta=="si":
     auxpreg3=int(input("Que alumno desea aliminar?: "))
     del (Datos["Alumnos"][auxpreg3-1]) #Se lo elimina con la funcion del
+    del (dnis[auxpreg3-1])#Se elimina el dni del alumno eliminado de la lista de los dnis
     pregunta=input("Desea eliminar a un alumno?: ").lower()
-
+    
 aux=0
 for c in (Datos["Alumnos"]):
     aux=aux+1
